@@ -28,6 +28,10 @@ impl FromStr for RequestLine {
 }
 
 impl RequestLine {
+    pub fn method(&self) -> &Method {
+        &self.method
+    }
+
     pub fn target(&self) -> &Path {
         &self.target
     }

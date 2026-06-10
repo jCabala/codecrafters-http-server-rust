@@ -19,6 +19,14 @@ impl StatusLine {
         }
     }
 
+    pub fn created() -> Self {
+        Self {
+            version: HTTPVersion::HTTP1_1,
+            status: Status::Created,
+            reason_phrase: Some("Created".to_string()),
+        }
+    }
+
     pub fn not_found() -> Self {
         Self {
             version: HTTPVersion::HTTP1_1,
