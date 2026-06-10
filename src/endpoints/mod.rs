@@ -11,6 +11,7 @@ pub fn handle(req: &Request) -> Response {
     match segments.as_slice() {
         [] => root::handle(req),
         ["echo", value] => echo::handle(req, value),
+        ["user-agent"] => echo::handle(req, req.headers().get("User-Agent").unwrap_or(&"Unknown".to_string())),
         _ => not_found::handle(req),
     }
 }

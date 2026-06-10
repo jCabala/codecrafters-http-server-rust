@@ -1,9 +1,10 @@
+use super::headers::Headers;
 use super::status_line::StatusLine;
 
 #[derive(Clone, Debug, PartialEq, Eq, Hash)]
 pub struct Response {
     pub status: StatusLine,
-    pub headers: Vec<(String, String)>,
+    pub headers: Headers,
     pub body: Option<String>,
 }
 
@@ -11,14 +12,14 @@ impl Response {
     pub fn new(status: StatusLine) -> Self {
         Self {
             status,
-            headers: Vec::new(),
+            headers: Headers::new(),
             body: None,
         }
     }
 
     pub fn with_body(mut self, content_type: &str, body: String) -> Self {
-        self.headers.push(("Content-Type".to_string(), content_type.to_string()));
-        self.headers.push(("Content-Length".to_string(), body.len().to_string()));
+        self.headers.insert("Content-Type".to_string(), content_type.to_string());
+        self.headers.insert("Content-Length".to_string(), body.len().to_string());
         self.body = Some(body);
         self
     }
