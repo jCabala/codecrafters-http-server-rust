@@ -3,6 +3,7 @@ use std::net::{TcpListener, TcpStream};
 use std::io::{Write, Read};
 use std::str::FromStr;
 
+mod endpoints;
 mod message;
 
 fn main() {
@@ -20,13 +21,7 @@ fn main() {
                 let request_str = String::from_utf8_lossy(&buffer);
                 let req = message::Request::from_str(&request_str).unwrap();
 
-                let status = if req.target() == "/" {
-                    message::StatusLine::success()
-                } else {
-                    message::StatusLine::not_found()
-                };
-
-                let res = message::Response { status };
+                let res = endpoints::handle(&req);
 
                 _stream.write(res.to_string().as_bytes()).unwrap();
             }

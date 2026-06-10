@@ -2,11 +2,12 @@ use std::str::FromStr;
 
 use super::http_version::HTTPVersion;
 use super::method::Method;
+use super::path::Path;
 
 #[derive(Clone, Debug, PartialEq, Eq, Hash)]
 pub struct RequestLine {
     method: Method,
-    target: String,
+    target: Path,
     version: HTTPVersion,
 }
 
@@ -20,14 +21,14 @@ impl FromStr for RequestLine {
         }
 
         let method = Method::from_str(parts[0])?;
-        let target = parts[1].to_string();
+        let target = Path::from_str(parts[1])?;
         let version = HTTPVersion::from_str(parts[2])?;
         Ok(RequestLine { method, target, version })
     }
 }
 
 impl RequestLine {
-    pub fn target(&self) -> &str {
+    pub fn target(&self) -> &Path {
         &self.target
     }
 }

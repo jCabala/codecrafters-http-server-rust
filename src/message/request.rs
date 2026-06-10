@@ -1,6 +1,8 @@
 use std::str::FromStr;
 
+use super::path::Path;
 use super::request_line::RequestLine;
+
 
 #[derive(Clone, Debug, PartialEq, Eq, Hash)]
 pub struct Request {
@@ -19,7 +21,7 @@ impl FromStr for Request {
 }
 
 impl Request {
-    pub fn target(&self) -> &str {
+    pub fn path(&self) -> &Path {
         self.request_line.target()
     }
 }
