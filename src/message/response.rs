@@ -42,7 +42,7 @@ impl Response {
     }
 
     pub fn with_header(mut self, name: String, value: String) -> Self {
-        self.headers.insert(name, value);
+        self.headers.set(name, value);
         self
     }
 
