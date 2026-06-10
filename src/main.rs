@@ -21,15 +21,17 @@ fn main() {
         std::thread::spawn(move || {
             match stream {
                 Ok(mut _stream) => {
-                    // Read the request
-                    let mut buffer = [0; 1024];
-                    _stream.read(&mut buffer).unwrap();
-                    let request_str = String::from_utf8_lossy(&buffer);
-                    let req = message::Request::from_str(&request_str).unwrap();
+                    loop {
+                        // Read the request
+                        let mut buffer = [0; 1024];
+                        _stream.read(&mut buffer).unwrap();
+                        let request_str = String::from_utf8_lossy(&buffer);
+                        let req = message::Request::from_str(&request_str).unwrap();
 
-                    let res = endpoints::handle(&req, &directory);
+                        let res = endpoints::handle(&req, &directory);
 
-                    _stream.write_all(&res.to_bytes()).unwrap();
+                        _stream.write_all(&res.to_bytes()).unwrap();
+                    }
                 }
                 Err(e) => {
                     println!("error: {}", e);
