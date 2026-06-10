@@ -5,7 +5,7 @@ use super::status_line::StatusLine;
 pub struct Response {
     pub status: StatusLine,
     pub headers: Headers,
-    pub body: Option<String>,
+    pub body: Option<Vec<u8>>,
 }
 
 impl Response {
@@ -20,18 +20,20 @@ impl Response {
     pub fn with_body(mut self, content_type: &str, body: String) -> Self {
         self.headers.insert("Content-Type".to_string(), content_type.to_string());
         self.headers.insert("Content-Length".to_string(), body.len().to_string());
-        self.body = Some(body);
+        self.body = Some(body.into_bytes());
         self
     }
-}
 
-impl ToString for Response {
-    fn to_string(&self) -> String {
+    pub fn to_bytes(&self) -> Vec<u8> {
         let status_str = self.status.to_string();
         let headers_str: String = self.headers.iter()
             .map(|(name, value)| format!("{}: {}\r\n", name, value))
             .collect();
-        let body_str = self.body.as_deref().unwrap_or("");
-        format!("{}\r\n{}\r\n{}", status_str, headers_str, body_str)
+
+        let mut bytes = format!("{}\r\n{}\r\n", status_str, headers_str).into_bytes();
+        if let Some(body) = &self.body {
+            bytes.extend_from_slice(body);
+        }
+        bytes
     }
 }

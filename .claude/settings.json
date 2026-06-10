@@ -18,7 +18,9 @@
       "Bash(curl -s -i -H \"Accept-Encoding: gzip\" http://127.0.0.1:4221/echo/abc)",
       "Bash(curl -s -i http://127.0.0.1:4221/echo/abc)",
       "Bash(curl -s -i -H \"Accept-Encoding: br\" http://127.0.0.1:4221/echo/abc)",
-      "Bash(curl -s -i -H \"Accept-Encoding: br, gzip\" http://127.0.0.1:4221/echo/abc)"
+      "Bash(curl -s -i -H \"Accept-Encoding: br, gzip\" http://127.0.0.1:4221/echo/abc)",
+      "Bash(curl -s -i -H \"Accept-Encoding: gzip\" http://127.0.0.1:4221/echo/abc --output /tmp/gzip_resp.bin)",
+      "Bash(curl -s --compressed -H \"Accept-Encoding: gzip\" http://127.0.0.1:4221/echo/abc)"
     ],
     "additionalDirectories": [
       "/tmp"

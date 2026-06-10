@@ -26,6 +26,13 @@ impl Headers {
         self.entries.push((name, value));
     }
 
+    pub fn set(&mut self, name: String, value: String) {
+        match self.entries.iter_mut().find(|(key, _)| key.eq_ignore_ascii_case(&name)) {
+            Some(entry) => entry.1 = value,
+            None => self.entries.push((name, value)),
+        }
+    }
+
     pub fn iter(&self) -> impl Iterator<Item = &(String, String)> {
         self.entries.iter()
     }

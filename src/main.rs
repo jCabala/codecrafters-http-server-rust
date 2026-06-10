@@ -29,7 +29,7 @@ fn main() {
 
                     let res = endpoints::handle(&req, &directory);
 
-                    _stream.write(res.to_string().as_bytes()).unwrap();
+                    _stream.write_all(&res.to_bytes()).unwrap();
                 }
                 Err(e) => {
                     println!("error: {}", e);
