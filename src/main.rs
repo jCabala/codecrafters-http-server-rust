@@ -7,9 +7,6 @@ mod endpoints;
 mod message;
 
 fn main() {
-    // You can use print statements as follows for debugging, they'll be visible when running tests.
-    println!("Logs from your program will appear here!");
-
     let args: Vec<String> = std::env::args().collect();
     let directory = args.iter()
         .position(|arg| arg == "--directory")

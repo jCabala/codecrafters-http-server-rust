@@ -16,6 +16,12 @@ impl Headers {
             .map(|(_, value)| value.as_str())
     }
 
+    pub fn contains(&self, name: &str, value: &str) -> bool {
+        self.get(name)
+            .map(|header| header.split(',').any(|item| item.trim().eq_ignore_ascii_case(value)))
+            .unwrap_or(false)
+    }
+
     pub fn insert(&mut self, name: String, value: String) {
         self.entries.push((name, value));
     }
