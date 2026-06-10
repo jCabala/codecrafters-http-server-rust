@@ -10,10 +10,18 @@ fn main() {
     // You can use print statements as follows for debugging, they'll be visible when running tests.
     println!("Logs from your program will appear here!");
 
+    let args: Vec<String> = std::env::args().collect();
+    let directory = args.iter()
+        .position(|arg| arg == "--directory")
+        .and_then(|i| args.get(i + 1))
+        .cloned()
+        .unwrap_or_else(|| ".".to_string());
+
     let listener = TcpListener::bind("127.0.0.1:4221").unwrap();
-    
+
     for stream in listener.incoming() {
-        std::thread::spawn(|| {
+        let directory = directory.clone();
+        std::thread::spawn(move || {
             match stream {
                 Ok(mut _stream) => {
                     // Read the request
@@ -22,7 +30,7 @@ fn main() {
                     let request_str = String::from_utf8_lossy(&buffer);
                     let req = message::Request::from_str(&request_str).unwrap();
 
-                    let res = endpoints::handle(&req);
+                    let res = endpoints::handle(&req, &directory);
 
                     _stream.write(res.to_string().as_bytes()).unwrap();
                 }

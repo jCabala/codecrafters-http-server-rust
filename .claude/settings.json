@@ -10,7 +10,9 @@
       "Bash(curl -s -w \"\\\\n/echo/hello -> %{http_code}\\\\n\" http://127.0.0.1:4221/echo/hello)",
       "Bash(curl -s -o /dev/null -w \"/ -> %{http_code}\\\\n\" http://127.0.0.1:4221/)",
       "Bash(curl -s -o /dev/null -w \"/foo -> %{http_code}\\\\n\" http://127.0.0.1:4221/foo)",
-      "Bash(curl -s -w \"\\\\n/echo/hello -> %{http_code}\\\\n\" -H \"User-Agent: testclient\" http://127.0.0.1:4221/echo/hello)"
+      "Bash(curl -s -w \"\\\\n/echo/hello -> %{http_code}\\\\n\" -H \"User-Agent: testclient\" http://127.0.0.1:4221/echo/hello)",
+      "Bash(curl -s -i http://127.0.0.1:4221/files/foo)",
+      "Bash(curl -s -i http://127.0.0.1:4221/files/non_existant_file)"
     ],
     "additionalDirectories": [
       "/tmp"
