@@ -1,4 +1,4 @@
-use std::string::ToString;
+use std::fmt;
 use std::str::FromStr;
 
 #[derive(Clone, Debug, PartialEq, Eq, Hash)]
@@ -6,10 +6,10 @@ pub enum HTTPVersion {
     HTTP1_1,
 }
 
-impl ToString for HTTPVersion {
-    fn to_string(&self) -> String {
+impl fmt::Display for HTTPVersion {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
-            HTTPVersion::HTTP1_1 => "HTTP/1.1".to_string(),
+            HTTPVersion::HTTP1_1 => write!(f, "HTTP/1.1"),
         }
     }
 }

@@ -1,19 +1,14 @@
-mod status;
-mod http_version;
-mod status_line;
 mod headers;
-mod response;
+mod http_version;
 mod method;
 mod path;
-mod request_line;
 mod request;
+mod request_line;
+mod response;
+mod status;
+mod status_line;
 
-pub use status::Status;
-pub use http_version::HTTPVersion;
-pub use status_line::StatusLine;
-pub use headers::Headers;
-pub use response::Response;
 pub use method::Method;
-pub use path::Path;
-pub use request_line::RequestLine;
 pub use request::Request;
+pub use response::Response;
+pub use status_line::StatusLine;

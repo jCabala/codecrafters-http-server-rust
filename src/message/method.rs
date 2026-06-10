@@ -2,8 +2,8 @@ use std::str::FromStr;
 
 #[derive(Clone, Debug, PartialEq, Eq, Hash)]
 pub enum Method {
-    GET,
-    POST,
+    Get,
+    Post,
 }
 
 impl FromStr for Method {
@@ -11,8 +11,8 @@ impl FromStr for Method {
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         match s {
-            "GET" => Ok(Method::GET),
-            "POST" => Ok(Method::POST),
+            "GET" => Ok(Method::Get),
+            "POST" => Ok(Method::Post),
             _ => Err(()),
         }
     }

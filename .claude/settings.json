@@ -20,7 +20,14 @@
       "Bash(curl -s -i -H \"Accept-Encoding: br\" http://127.0.0.1:4221/echo/abc)",
       "Bash(curl -s -i -H \"Accept-Encoding: br, gzip\" http://127.0.0.1:4221/echo/abc)",
       "Bash(curl -s -i -H \"Accept-Encoding: gzip\" http://127.0.0.1:4221/echo/abc --output /tmp/gzip_resp.bin)",
-      "Bash(curl -s --compressed -H \"Accept-Encoding: gzip\" http://127.0.0.1:4221/echo/abc)"
+      "Bash(curl -s --compressed -H \"Accept-Encoding: gzip\" http://127.0.0.1:4221/echo/abc)",
+      "Bash(curl -s -i http://127.0.0.1:4221/echo/foo http://127.0.0.1:4221/echo/bar)",
+      "Bash(python3 -c \"print\\('A'*5000, end=''\\)\")",
+      "Bash(curl -s -i --data-binary @/tmp/big_body.txt -H \"Content-Type: application/octet-stream\" http://127.0.0.1:4221/files/big_file)",
+      "Bash(curl -s http://127.0.0.1:4221/files/big_file)",
+      "Bash(curl -s -o /dev/null -w \"/echo/abc -> %{http_code}\\\\n\" http://127.0.0.1:4221/echo/abc)",
+      "Bash(pkill -9 -f target/debug/codecrafters-http-server)",
+      "Bash(cargo clippy *)"
     ],
     "additionalDirectories": [
       "/tmp"

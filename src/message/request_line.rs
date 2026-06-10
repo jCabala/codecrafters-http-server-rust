@@ -23,7 +23,11 @@ impl FromStr for RequestLine {
         let method = Method::from_str(parts[0])?;
         let target = Path::from_str(parts[1])?;
         let version = HTTPVersion::from_str(parts[2])?;
-        Ok(RequestLine { method, target, version })
+        Ok(RequestLine {
+            method,
+            target,
+            version,
+        })
     }
 }
 

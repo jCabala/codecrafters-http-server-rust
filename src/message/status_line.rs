@@ -1,4 +1,4 @@
-use std::string::ToString;
+use std::fmt;
 
 use super::http_version::HTTPVersion;
 use super::status::Status;
@@ -36,8 +36,14 @@ impl StatusLine {
     }
 }
 
-impl ToString for StatusLine {
-    fn to_string(&self) -> String {
-        format!("{} {} {}", self.version.to_string(), self.status.clone() as u16, self.reason_phrase.as_ref().unwrap_or(&"".to_string()))
+impl fmt::Display for StatusLine {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(
+            f,
+            "{} {} {}",
+            self.version,
+            self.status.clone() as u16,
+            self.reason_phrase.as_deref().unwrap_or("")
+        )
     }
 }

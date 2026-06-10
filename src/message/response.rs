@@ -18,15 +18,19 @@ impl Response {
     }
 
     pub fn with_body(mut self, content_type: &str, body: String) -> Self {
-        self.headers.insert("Content-Type".to_string(), content_type.to_string());
-        self.headers.insert("Content-Length".to_string(), body.len().to_string());
+        self.headers
+            .insert("Content-Type".to_string(), content_type.to_string());
+        self.headers
+            .insert("Content-Length".to_string(), body.len().to_string());
         self.body = Some(body.into_bytes());
         self
     }
 
     pub fn to_bytes(&self) -> Vec<u8> {
         let status_str = self.status.to_string();
-        let headers_str: String = self.headers.iter()
+        let headers_str: String = self
+            .headers
+            .iter()
             .map(|(name, value)| format!("{}: {}\r\n", name, value))
             .collect();
 
@@ -35,5 +39,23 @@ impl Response {
             bytes.extend_from_slice(body);
         }
         bytes
+    }
+
+    pub fn with_header(mut self, name: String, value: String) -> Self {
+        self.headers.insert(name, value);
+        self
+    }
+
+    pub fn is_final(&self) -> bool {
+        self.headers
+            .get("Connection")
+            .map(|v| v.to_lowercase() == "close")
+            .unwrap_or(false)
+    }
+
+    pub fn into_final(mut self) -> Self {
+        self.headers
+            .insert("Connection".to_string(), "close".to_string());
+        self
     }
 }
