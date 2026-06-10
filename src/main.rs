@@ -1,8 +1,9 @@
 #[allow(unused_imports)]
 use std::net::{TcpListener, TcpStream};
-use std::io::Write;
+use std::io::{Write, Read};
+use std::str::FromStr;
 
-mod response;
+mod message;
 
 fn main() {
     // You can use print statements as follows for debugging, they'll be visible when running tests.
@@ -13,11 +14,21 @@ fn main() {
     for stream in listener.incoming() {
         match stream {
             Ok(mut _stream) => {
-               let res = response::Response {
-                   status: response::Status::Success,
-               };
+                // Read the request
+                let mut buffer = [0; 1024];
+                _stream.read(&mut buffer).unwrap();
+                let request_str = String::from_utf8_lossy(&buffer);
+                let req = message::Request::from_str(&request_str).unwrap();
 
-               _stream.write(res.to_string().as_bytes()).unwrap();
+                let status = if req.target() == "/" {
+                    message::StatusLine::success()
+                } else {
+                    message::StatusLine::not_found()
+                };
+
+                let res = message::Response { status };
+
+                _stream.write(res.to_string().as_bytes()).unwrap();
             }
             Err(e) => {
                 println!("error: {}", e);
